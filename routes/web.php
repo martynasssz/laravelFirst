@@ -13,4 +13,10 @@
 
 Route::get('/', function () {
     return view('welcome');
+
 });
+Auth::routes();
+
+Route::get('/home','HomeController@index');
+Route::resource('advert','AdvertController');
+Route::resource('category','CategoryController');
