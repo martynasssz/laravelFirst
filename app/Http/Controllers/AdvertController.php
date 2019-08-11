@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Advert;
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str; //nebuvo šio kontrolerio
 
 class AdvertController extends Controller
 {
@@ -14,8 +16,10 @@ class AdvertController extends Controller
      */
     public function index()
     {
+      $adverts=Advert::All();
+
 //        echo 'cia indexax';
-        return view('adverts.index');
+        return view('adverts.index', compact('adverts')); //atvaizduoja templatą
     }
 
     /**
@@ -25,9 +29,10 @@ class AdvertController extends Controller
      */
     public function create()
     {
-        $categories =Category::all();
-        $data['title']= 'Skelbimų kūrimas';
-        $data['categories']=$categories;
+//        $categories =Category::all(); //galima paprastai netrumpinant
+//          $data['categories']=$categories;
+        $data['categories']= Category::where('active','=',1)->get();
+        $data['title']= 'Skelbimų kurimas';
         return view('adverts.create',$data);
     }
 
@@ -39,7 +44,16 @@ class AdvertController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $advert = new Advert();
+        $advert->title = $request->title; //duombazes title uzsetina formos lauko reišme
+        $advert->content = $request->content_text;
+        $advert->category_id = $request->category_id;
+        $advert->image = $request->image;
+        $advert->city_id = 1;
+        $advert->user_id = 1;
+        $advert->price = $request->price;
+        $advert->slug = Str::slug($request->title, '-');
+        $advert->save();
     }
 
     /**
@@ -50,7 +64,12 @@ class AdvertController extends Controller
      */
     public function show($id)
     {
-        //
+        $advert=Advert::find($id);
+        $data['advert'] =$advert;
+//        echo '<pre>';
+//        print_r( $data['advert']);
+//        echo '</pre>';
+        return view('adverts.single',$data);
     }
 
     /**
@@ -61,7 +80,11 @@ class AdvertController extends Controller
      */
     public function edit($id)
     {
-        //
+        $advert=Advert::find($id);
+//        $advert=Advert::find($id);
+        $data['advert'] =$advert;
+        $data['categories']= Category::where('active','=',1)->get();
+        return view('adverts.edit',$data);
     }
 
     /**
@@ -73,7 +96,16 @@ class AdvertController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $advert=Advert::find($id);
+        $advert->title = $request->get('title'); //duombazes title uzsetina formos lauko reišme
+        $advert->content = $request->get('content_text');
+        $advert->category_id = $request->get('category_id');
+        $advert->image = $request->get('image');
+        $advert->city_id = 1;
+        $advert->user_id = 1;
+        $advert->price = $request->get('price');
+        $advert->slug = Str::slug($request->get('title'), '-');
+        $advert->save();
     }
 
     /**
@@ -84,6 +116,9 @@ class AdvertController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $advert = Advert::find($id);
+        $advert->active = 0;
+        $advert->save();
+
     }
 }

@@ -8,20 +8,20 @@
                     <div class="card-header">{{$title}}</div>
 
                     <div class="card-body">
-                        <form methof="POST" action="{{route('advert.store')}}">
+                        <form method="POST" action="{{route('advert.store')}}">
                             @csrf
                             <input class="form-control" type="text" name="title" placeholder="Pavadinimas">
-                            <textarea class="form-control" name="content" placeholder="Skelbimas"> </textarea>
+                            <textarea class="form-control" name="content_text" placeholder="Skelbimas"> </textarea>
                             <input class="form-control" type="text" name="image" placeholder="Paveiksliukas">
                             <input class="form-control" type="number" name="price" placeholder="Kaina">
-                            <select name="category">
+                            <select name="category_id">
                                 <option > Pasirinkti kategorija  </option>
                                 @foreach($categories as $cat)
                                   <option value="{{$cat->id}}" > {{$cat->title}}</option>
                                 @endforeach
 
                             </select>
-                            <button class="btn btn-info"> sukurti</button>
+                            <button class="btn btn-info"> Sukurti</button>
 
                         </form>
 

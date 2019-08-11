@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Advert;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -84,6 +85,6 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
 }
