@@ -10,7 +10,9 @@
                     <div class="card-body">
                         {{$advert->content}}
                         <img class="img-fluid" src="{{$advert->image}}" alt="Italian Trulli">
+                       <div class="alert"> Kategorija: {{$advert->category->title}}
 
+                       </div>
 
                     </div>
                 </div>

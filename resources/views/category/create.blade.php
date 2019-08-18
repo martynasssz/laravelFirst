@@ -5,16 +5,29 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Skelbimai</div>
+                    <div class="card-header">Kategorijų kūrimas</div>
 
                     <div class="card-body">
                         <form method="POST" action="{{route('category.store')}}">
                             @csrf
                             <input class=form-control" type="text" name="title" placeholder="Pavadinimas">
 
-                            <select name="parent_id">
-                                    <option value="0">-------
-                                    </option>
+                            <select class="form-control" name="parent_id">
+
+
+
+
+
+
+
+
+                                    <option value="0">------- </option>
+                                @foreach($categories as $cat)
+                                    <option value="{{$cat->id}}">{{$cat->title}}</option>
+                                @endforeach
+
+
+
                             </select>
                             <button class="btn btn-light"> Create </button>
                         </form>

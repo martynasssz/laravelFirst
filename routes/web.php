@@ -18,5 +18,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home','HomeController@index');
+
 Route::resource('advert','AdvertController');
+
 Route::resource('category','CategoryController');
+
+Route::resource('city','CityController');

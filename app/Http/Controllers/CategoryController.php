@@ -16,7 +16,15 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories= Category::where('active','=',1)->where('parent_id','=',0)->get();
+        $subcategories=Category::where('active','=',1)->where('parent_id','!=',0)->get();
+        $data['categories']= $categories;
+        $data['subcategories']=$subcategories;
+
+
+
+       // dd($categories);
+        return view('category.index', $data);
     }
 
     /**
@@ -26,7 +34,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view ('category.create');
+        $data['categories'] = Category::all();
+        return view ('category.create', $data);
+
     }
 
     /**
@@ -49,9 +59,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function  show(Category $category)
     {
-        //
+       $data['category'] = $category;
+       return view('category.single',$data);
     }
 
     /**
@@ -62,7 +73,15 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categories= Category::where('active','=',1)->get();
+        $data['categories']= $categories;
+        $cat =Category::find($id);
+        $data['cat'] = $cat;
+
+
+        return view('category.edit',$data);
+
+
     }
 
     /**
@@ -74,7 +93,11 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $category=Category::find($id);
+        $category->title =$request->get('title');
+        $category->slug =Str::slug($request->get('title'),'-');
+        $category->parent_id=$request->parent_id;
+        $category->save();
     }
 
     /**
@@ -85,6 +108,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-
+        $category = Category::find($id);
+        $category->active = 0;
+        $category->save();
     }
 }
