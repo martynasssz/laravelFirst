@@ -23,4 +23,8 @@ Route::resource('advert','AdvertController');
 
 Route::resource('category','CategoryController');
 
-Route::resource('city','CityController');
+Route::resource('cities','CityController');
+
+Route::resource('comment', 'CommentController');
+
+Route::resource('admin', 'AdminController');

@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    //
+    public function advert(){
+        return $this->hasOne('App\Advert', 'id', 'advert_id');
+    }
+    public function user(){
+        return $this->hasOne('App\User', 'id', 'user_id');
+    }
 }

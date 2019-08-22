@@ -10,6 +10,8 @@ class Advert extends Model
         return $this->hasOne('App\Category','id','category_id');
     }
 
+
+
     public function getRouteKeyName()
     {
         return 'slug';

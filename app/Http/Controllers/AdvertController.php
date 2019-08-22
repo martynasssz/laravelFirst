@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Advert;
 use App\Category;
+use App\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str; //nebuvo šio kontrolerio
@@ -71,11 +72,13 @@ class AdvertController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Advert $advert)
+    public function show($slug)
     {
-        //$advert =Advert::where('slug',$slug) ->first(); galima ir taip jei daro find
-        //$advert = Advert::find($id);
+        $advert =Advert::where('slug',$slug) ->first();
+       // $advert = Advert::find($id);
         $data['advert'] = $advert;
+        $comments = Comment::where('active', '=', 1)->where('advert_id','=',$advert->id)->get();
+        $data['comments'] = $comments;
 //        echo '<pre>';
 //        print_r( $data['advert']);
 //        echo '</pre>';
@@ -116,6 +119,7 @@ class AdvertController extends Controller
         $advert->price = $request->get('price');
         $advert->slug = Str::slug($request->get('title'), '-');
         $advert->save();
+        return redirect()->action('AdvertController@show', ['slug' => $advert->slug]);
     }
 
     /**
@@ -129,6 +133,7 @@ class AdvertController extends Controller
         $advert = Advert::find($id);
         $advert->active = 0;
         $advert->save();
+        return redirect()->action('AdvertController@index');
 
     }
 }

@@ -14,7 +14,9 @@ class CityController extends Controller
      */
     public function index()
     {
-       return view ('cities.index');
+        $cities = City::All();
+        $data['cities'] = $cities;
+        return view ('cities.index',$data);
     }
 
     /**
@@ -24,7 +26,13 @@ class CityController extends Controller
      */
     public function create()
     {
-        //
+        $user = auth()->user();
+        if ($user && $user->hasRole('admin')) {
+            return view ('cities.create');
+        }
+        else {
+            echo "Prisijunkite";
+        }
     }
 
     /**
@@ -36,9 +44,9 @@ class CityController extends Controller
     public function store(Request $request)
     {
         $city = new City();
-        $city->name = $request->cities;
+        $city->name = $request->name;
         $city->save();
-        return view('cities.index');
+        return redirect()->back();
     }
 
     /**

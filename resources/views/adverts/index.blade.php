@@ -8,35 +8,29 @@
                     <div class="card-header">Skelbimai</div>
 
                     <div class="card-body">
-                        <table class="table">
-                            <tr>
-                                <th scope="col">Kategorija</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">Content</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Edit</th>
-                                <th scope="col">Delete</th>
-                            </tr>
-                            @foreach($adverts as $advert)
-                                <tr>
-                                    <td> {{$advert->category->title}}</td>
-                                    <td> {{$advert->title}}</td>
-                                    <td> {{$advert->content}}</td>
-                                    <td><img class="img-fluid" src="{{$advert->image}}" alt="Italian Trulli"></td>
-                                    <td> {{$advert->price}}</td>
-                                    <td><a href="{{route('advert.edit', $advert->id)}}" class="btn btn-primary">Edit</a>
-                                    </td>
-                                    <td>
-                                        <form method="POST" action="{{route('advert.destroy', $advert->id)}}">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button class="btn btn-danger">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </table>
+                        @foreach($adverts as $advert)
+                            <div class="card mb-3" style="max-width: 900px;">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="{{ $advert-> image}}" class="card-img" alt="...">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h6>{{$advert->category->title}}</h6>
+                                            <h5 class="card-title">{{$advert->title}}</h5>
+                                            <p class="card-text"> {{ $advert-> content}}</p>
+                                            <p class="card-text">
+                                                <small class="text-muted">Kaina: {{ $advert-> price}} €</small>
+                                                <a href="advert/{{$advert->slug}}"
+                                                   class="btn btn-outline-secondary float-right btn-sm">Detaliau</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        @endforeach
+
                     </div>
 
                 </div>
