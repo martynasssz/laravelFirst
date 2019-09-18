@@ -10,7 +10,7 @@
                     <div class="card-header">Adverts</div>
 
                     <div class="card-body">
-                        Your application's dashboard.
+                        Admin's dashboard.
                     </div>
                 </div>
             </div>

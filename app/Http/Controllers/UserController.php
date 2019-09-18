@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Advert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AdminController extends Controller
+
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,15 +16,43 @@ class AdminController extends Controller
      */
     public function index()
     {
+//        $user = Auth::user();
+//        if ($user && ($user->hasRole('user'))) {
+//            return view('user.user');
+//        } else {
+//            echo 'No permissions';
+//        }
+
         $user = Auth::user();
-        if ($user && ($user->hasRole('admin'))) {
-            return view('admin.admin');
-        } else if ($user && ($user->hasRole('user'))) {
-            return redirect()->action('UserController@index');
-        } else {
-            echo 'No permissions';
+        if ($user && ($user->hasRole('user'))) {
+            $adverts =Advert::where('active', '=', 1)->where('user_id', '=', $user->id)->get();
+            $data['adverts'] = $adverts;
+          //  dd($data['adverts']);
+            return view('user.advert', $data);
+               // return view('advert.index', $data);
         }
+
+//echo "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr";
+
     }
+
+
+
+
+
+
+//    public function userAdverts()
+//    {
+//        $user = Auth::user();
+//        if ($user && ($user->hasRole('user'))) {
+//            $adverts =Advert::where('active', '=', 1)->where('user_id', '=', $user->id)->get();
+//            $data['adverts'] = $adverts;
+//            return view('adverts.index', $data);
+//        }
+//
+//
+//
+//    }
 
     /**
      * Show the form for creating a new resource.

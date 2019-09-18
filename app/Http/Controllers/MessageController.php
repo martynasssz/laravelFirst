@@ -2,26 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Message;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class AdminController extends Controller
+
+class MessageController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function __contruct()
+    {
+        $this->middleware('auth'); //pasiekiamas tik autorizuotiems
+    }
+
     public function index()
     {
-        $user = Auth::user();
-        if ($user && ($user->hasRole('admin'))) {
-            return view('admin.admin');
-        } else if ($user && ($user->hasRole('user'))) {
-            return redirect()->action('UserController@index');
-        } else {
-            echo 'No permissions';
-        }
+        // echo 'ok';
+        $data['messages'] = Message::active()->where('receiver_id', auth()->id())->get();
+        return view('messages.index',$data);
+    }
+
+    public function indexAdmin()
+    {
+        // echo 'ok';
+       // $messages = Message::active()->where('reception_id', auth()->id()->get());
+        return view('admin.messages');
     }
 
     /**
@@ -51,9 +59,15 @@ class AdminController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id) //traukiam visa objekta
     {
-        //
+        $message = Message::find($id);
+        if ($message->status != 0) {
+            $message->status = 0;
+            $message->save();
+        }
+        $data['message'] = $message;
+        return view('messages.single', $data);
     }
 
     /**

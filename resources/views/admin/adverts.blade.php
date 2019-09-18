@@ -2,7 +2,8 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
+          <div class="row justify-content-center">
+{{--              @include('admin.sidebar')--}}
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Skelbimai</div>
@@ -30,7 +31,7 @@
                             </div>
 
                         @endforeach
-                            {{$adverts->links()}}
+                        {{$adverts->links()}}
 
                     </div>
 
@@ -39,3 +40,31 @@
         </div>
     </div>
 @endsection
+
+
+
+
+
+
+
+
+
+
+
+{{--@section('content')--}}
+{{--    <div class="container">--}}
+{{--        <div class="row">--}}
+{{--            @include('admin.sidebar')--}}
+
+{{--            <div class="col-md-9">--}}
+{{--                <div class="card">--}}
+{{--                    <div class="card-header">Adverts</div>--}}
+
+{{--                    <div class="card-body">--}}
+{{--                        Adverts.--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--@endsection--}}

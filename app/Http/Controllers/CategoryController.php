@@ -62,6 +62,7 @@ class CategoryController extends Controller
     public function  show(Category $category)
     {
        $data['category'] = $category;
+
        return view('category.single',$data);
     }
 
@@ -97,7 +98,9 @@ class CategoryController extends Controller
         $category->title =$request->get('title');
         $category->slug =Str::slug($request->get('title'),'-');
         $category->parent_id=$request->parent_id;
+
         $category->save();
+        return redirect()->back()->with('message','Kategorija sukurta');
     }
 
     /**

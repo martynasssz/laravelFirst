@@ -24,12 +24,26 @@
                         </form>
 
                     </div>
+                    <div class="alert"> Atribute Set: {{$advert->attributeSet->name}}  </div>
+                    {{--                         <div class="alert"> Value: {{$attributeValues->attributeValue->atrributes->value}}  </div>--}}
+                    <div class="alert">
+                        @foreach ($attributeValues as $attributeValue)
+                            <b> {{$attributeValue->values->label}} </b>
+                            {{$attributeValue->value}} </br>
+
+                        @endforeach
+                    </div>
+
+
+
+
+
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center mt-3">
+       <div class="row justify-content-center mt-3">
             <div class="col-md-8">
-                  @foreach($comments as $comment)
+                @foreach($comments as $comment)
                     <div class="card mt-2">
                         <div class="d-flex justify-content-between p-2 card-header">
                             <h6>{{$comment->user->name}} </h6>
@@ -42,13 +56,16 @@
                                 @csrf
                                 <button type="submit" class="btn btn-dark float-right btn-sm">Delete</button>
                             </form>
-
                         </div>
+
+
+
                         <div class="p-2">{{ $comment->content}}</div>
                     </div>
                 @endforeach
             </div>
-            <div class="card-body col-md-8">
+
+                        <div class="card-body col-md-8">
                 <form method="post" action="{{route('comment.store')}}">
                     @csrf
                     @role('admin|user')
@@ -56,11 +73,11 @@
                               placeholder="Palikite komentarą"></textarea>
 
                     <input type="hidden" value="{{$advert->id}}" name="advertId">
-{{--                    <input type="hidden" value="{{$advert->user_id}}" name="userId">--}}
+                    {{--                    <input type="hidden" value="{{$advert->user_id}}" name="userId">--}}
 
                     <button class="btn btn-outline-secondary mt-2">Komentuoti</button>
                     @else <b>{{'Norėdami komentuoti turite prisijungti'}} </b>
-                        @endrole
+                    @endrole
                 </form>
             </div>
         </div>

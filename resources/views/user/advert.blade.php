@@ -3,6 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
+            @include('user.sidebar')
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Skelbimai</div>
@@ -30,7 +31,7 @@
                             </div>
 
                         @endforeach
-                            {{$adverts->links()}}
+{{--                        {{$adverts->links()}}--}}
 
                     </div>
 
