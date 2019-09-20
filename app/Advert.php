@@ -16,7 +16,7 @@ class Advert extends Model
         return 'slug';
     }
 
-    public function scopeActive($query)
+    public function scopeActive($query) //tam, kad advert kontroleryje nereikėtu rasyti where('active',1) index metode;
     {
         return $query->where('active',1);
     }

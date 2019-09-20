@@ -35,17 +35,17 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group">
-                                    <select name="attribute_set">
-                                        @foreach($attribute_sets as $attributeSet)
-                                            <option @if($attributeSet->id ==$advert->attribute_set_id)
-                                                    selected
-                                                    @endif
-                                                    value="{{$attributeSet->id}}">{{$attributeSet->name}}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
+{{--                                <div class="form-group">--}}
+{{--                                    <select name="attribute_set">--}}
+{{--                                        @foreach($attribute_sets as $attributeSet)--}}
+{{--                                            <option @if($attributeSet->id ==$advert->attribute_set_id)--}}
+{{--                                                    selected--}}
+{{--                                                    @endif--}}
+{{--                                                    value="{{$attributeSet->id}}">{{$attributeSet->name}}--}}
+{{--                                            </option>--}}
+{{--                                        @endforeach--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
                             <div class="form-group">
                                 @foreach ($attributes as $attribute)
 
@@ -58,7 +58,7 @@
                                 @endforeach
                             </div>
 
-                            <button class="btn btn-info"> Redaguoti</button>
+                            <button class="btn btn-info"> Saugoti</button>
                         </form>
                     </div>
                 </div>

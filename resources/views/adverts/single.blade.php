@@ -13,35 +13,34 @@
                         {{$advert->content}}
                         <div class="card-columns mt-4">Kaina: {{ $advert->price}} €</div>
 
-                        <form method="post" action="{{route('advert.destroy', ['id' => $advert->id])}}">
-                            @method('DELETE')
-                            @csrf
-                            <button type="submit" class="btn btn-dark float-right btn-sm">Delete</button>
-                        </form>
-
-                        <form>
-                            <button class="btn btn-dark float-right btn-sm" formaction="{{route('advert.edit', $advert->id)}}">Edit</button>
-                        </form>
-
                     </div>
-                    <div class="alert"> Atribute Set: {{$advert->attributeSet->name}}  </div>
-                    {{--                         <div class="alert"> Value: {{$attributeValues->attributeValue->atrributes->value}}  </div>--}}
-                    <div class="alert">
+                    <div class="card-body">
+                    Atribute Set: {{$advert->attributeSet->name}}
+
+
                         @foreach ($attributeValues as $attributeValue)
-                            <b> {{$attributeValue->values->label}} </b>
-                            {{$attributeValue->value}} </br>
+                            <div class="font-weight-bold"> {{$attributeValue->values->label}}</div>
+                            <div class="tm-2">  {{$attributeValue->value}}  </div>
 
                         @endforeach
                     </div>
+                    <div>
+                    <form method="post" action="{{route('advert.destroy', ['id' => $advert->id])}}">
+                        @method('DELETE')
+                        @csrf
+                        <button type="submit" class="btn btn-dark float-right btn-sm">Delete</button>
+                    </form>
 
-
-
-
-
+                    <form>
+                        <button class="btn btn-dark float-right btn-sm"
+                                formaction="{{route('advert.edit', $advert->id)}}">Edit
+                        </button>
+                    </form>
+                    </div>
                 </div>
             </div>
         </div>
-       <div class="row justify-content-center mt-3">
+        <div class="row justify-content-center mt-3">
             <div class="col-md-8">
                 @foreach($comments as $comment)
                     <div class="card mt-2">
@@ -59,13 +58,12 @@
                         </div>
 
 
-
                         <div class="p-2">{{ $comment->content}}</div>
                     </div>
                 @endforeach
             </div>
 
-                        <div class="card-body col-md-8">
+            <div class="card-body col-md-8">
                 <form method="post" action="{{route('comment.store')}}">
                     @csrf
                     @role('admin|user')

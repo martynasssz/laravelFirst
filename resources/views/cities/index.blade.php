@@ -3,16 +3,25 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
+            @include('admin.sidebar')
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Miestai</div>
-
                     <div class="card-body">
-                    @foreach ($cities as $city)
-                        <h6> {{$city->name}}  </h6>
-                    @endforeach
+                        <form method="post" action="{{route('cities.store')}}">
+                            @csrf
+                            <input name="name" type="text" class="form-control mt-2"  placeholder="Miestai">
+                            <button class="btn alert-success mt-2">Create</button>
+                        </form>
+                    </div>
+                </div>
 
-
+                <div class="card">
+                    <div class="card-header">Cities panel</div>
+                    <div class="card-body">
+                        @foreach ($cities as $city)
+                            <h6> {{$city->name}}  </h6>
+                        @endforeach
                     </div>
                 </div>
             </div>

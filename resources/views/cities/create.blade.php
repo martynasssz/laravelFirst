@@ -6,7 +6,6 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Miestai</div>
-
                     <div class="card-body">
                         <form method="post" action="{{route('cities.store')}}">
                             @csrf
