@@ -43,10 +43,16 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
-        $city = new City();
-        $city->name = $request->name;
-        $city->save();
-        return redirect()->back();
+        $user = auth()->user();
+        if ($user && $user->hasRole('admin')) {
+            $city = new City();
+            $city->name = $request->name;
+            $city->save();
+            return redirect()->back();
+        }
+        else {
+            echo "Prisijunkite";
+        }
     }
 
     /**
@@ -68,7 +74,15 @@ class CityController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = auth()->user();
+        if ($user && $user->hasRole('admin')) {
+            $city = City::find($id);
+            $data['city']= $city;
+            return view ('cities.edit', $data);
+        }
+        else {
+            echo "Prisijunkite";
+        }
     }
 
     /**
@@ -80,7 +94,16 @@ class CityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = auth()->user();
+        if ($user && $user->hasRole('admin')) {
+            $city = City::find($id);
+            $city->name = $request->name;
+            $city->save();
+            return redirect()->action('CityController@index');
+        }
+        else {
+            echo "Prisijunkite";
+        }
     }
 
     /**
@@ -91,6 +114,7 @@ class CityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $city = City::destroy($id);
+        return redirect()->action('CityController@index');
     }
 }

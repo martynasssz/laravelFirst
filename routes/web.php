@@ -32,11 +32,19 @@ Route::resource('comment', 'CommentController');
 
 Route::get('/admin/messages', 'MessageController@index')->name('messages.index');
 
+//Cities routes start
 Route::get('/admin/cities', 'CityController@index')->name('cities.index');
 
 Route::get('/admin/cities/create', 'CityController@create')->name('cities.create');
 
 Route::post('/admin/cities/store', 'CityController@store')->name('cities.store');
+
+Route::get('/admin/cities/{id}/edit', 'CityController@edit')->name('cities.edit');
+
+Route::put('/admin/cities/{id}', 'CityController@update')->name('cities.update');
+//Cities route finish
+
+Route::delete('/admin/cities/{id}/delete', 'CityController@destroy')->name('cities.destroy');
 
 Route::get('/user/adverts', 'UserController@index')->name('user.advert');
 
@@ -45,9 +53,6 @@ Route::get('/user/messages', 'MessageController@index')->name('messages.index');
 Route::get('/user/advert/create', 'AdvertController@create')->name('adverts.create');
 
 Route::get('/user/messages/{id}', 'MessageController@show')->name('message.show');
-
-
-
 
 Route::resource('advert','AdvertController');
 
