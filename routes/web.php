@@ -20,19 +20,20 @@ Auth::routes();
 Route::get('/home','HomeController@index');
 
 //Route::get('/admin/advert', 'AdvertController@index')->name('admin.adverts');
-
-
-
-
 Route::resource('categories','CategoryController');
 
+Route::get('/admin/categories', 'CategoryController@index')->name('category.index');
+
+Route::get('/admin/categories/{id}/edit', 'CategoryController@edit')->name('category.edit');
+
+Route::put('/admin/categories/{id}', 'CategoryController@update')->name('category.update');
 //Route::resource('cities','CityController');
 
 Route::resource('comment', 'CommentController');
 
 Route::get('/admin/messages', 'MessageController@index')->name('messages.index');
 
-//Cities routes start
+//----------Cities routes start---------------------
 Route::get('/admin/cities', 'CityController@index')->name('cities.index');
 
 Route::get('/admin/cities/create', 'CityController@create')->name('cities.create');
@@ -42,7 +43,7 @@ Route::post('/admin/cities/store', 'CityController@store')->name('cities.store')
 Route::get('/admin/cities/{id}/edit', 'CityController@edit')->name('cities.edit');
 
 Route::put('/admin/cities/{id}', 'CityController@update')->name('cities.update');
-//Cities route finish
+//------------------Cities route finish-----------------
 
 Route::delete('/admin/cities/{id}/delete', 'CityController@destroy')->name('cities.destroy');
 

@@ -20,9 +20,7 @@ class CategoryController extends Controller
         $subcategories=Category::where('active','=',1)->where('parent_id','!=',0)->get();
         $data['categories']= $categories;
         $data['subcategories']=$subcategories;
-
-
-
+        $data['categories_create'] = Category::all();
        // dd($categories);
         return view('category.index', $data);
     }
@@ -36,6 +34,7 @@ class CategoryController extends Controller
     {
         $data['categories'] = Category::all();
         return view ('category.create', $data);
+
 
     }
 
@@ -52,6 +51,7 @@ class CategoryController extends Controller
         $category->slug =Str::slug($request->title,'-');
         $category->parent_id=$request->parent_id;
         $category->save();
+        return redirect()->back();
     }
     /**
      * Display the specified resource.

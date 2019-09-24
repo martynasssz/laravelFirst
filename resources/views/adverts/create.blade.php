@@ -37,6 +37,17 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
+                                    <label for="locartion">Objekto vieta</label>
+                                    <select multiple class="form-control col-md-4" name="category_id">
+                                            @foreach($cities as $city)
+                                            <option value="{{$city->id}}"> {{$city->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+
+
+                                <div class="form-group">
                                     <label for="attribute_set">Papildoma informacija</label>
                                     <select multiple class="form-control col-md-4" name="attribute_set">
                                         @foreach($attribute_sets as $attributeSet)

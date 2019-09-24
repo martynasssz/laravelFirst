@@ -28,7 +28,7 @@
 
 
                                     <option value="0">-------</option>
-                                    @foreach($categories as $cat)
+                                @foreach($categories as $cat)
                                         <option value="{{$cat->id}}">{{$cat->title}}</option>
                                     @endforeach
 

@@ -3,6 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
+            @include('admin.sidebar')
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Kategorijos</div>
@@ -13,9 +14,6 @@
                             @method('PUT')
                             @csrf
                             <input class=form-control" type="text" name="title" placeholder="Pavadinimas" value="{{$cat->title}}">
-
-
-
 
 
                             <select name="parent_id">

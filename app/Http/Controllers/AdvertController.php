@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Advert;
 use App\Attribute;
 use App\Category;
+use App\City;
 use App\Comment;
 use App\User;
 use Illuminate\Http\Request;
@@ -46,6 +47,7 @@ class AdvertController extends Controller
             $data['categories'] = Category::where('active', '=', 1)->get();   ///---perrasyti i modeli 2019-09-19!!!!-----
             $data['title'] = 'Skelbimų kurimas';
             $data['attribute_sets'] = AttributeSet::all();
+            $data['cities'] =City::All();
             return view('adverts.create', $data);
         } else {
             echo 'no permissions';
@@ -153,7 +155,6 @@ class AdvertController extends Controller
                 $oldValue->save();
             }
         }
-
 
         $advert = Advert::find($id);
         $advert->title = $request->title; //duombazes title uzsetina formos lauko reišme
