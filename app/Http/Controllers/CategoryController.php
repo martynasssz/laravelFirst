@@ -16,11 +16,13 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories= Category::where('active','=',1)->where('parent_id','=',0)->get();
-        $subcategories=Category::where('active','=',1)->where('parent_id','!=',0)->get();
-        $data['categories']= $categories;
-        $data['subcategories']=$subcategories;
-        $data['categories_create'] = Category::all();
+     //   $categories= Category::where('active','=',1)->where('parent_id','=',0)->get();
+      //  $subcategories=Category::where('active','=',1)->where('parent_id','!=',0)->get();
+      //  $data['categories']= $categories;
+        $data['categories']=Category::where('active','=',1)->where('parent_id','=',0)->get();;
+
+       // $data['subcategories']=$subcategories;
+      $data['categories_create'] = Category::all();
        // dd($categories);
         return view('category.index', $data);
     }
@@ -34,7 +36,6 @@ class CategoryController extends Controller
     {
         $data['categories'] = Category::all();
         return view ('category.create', $data);
-
 
     }
 
@@ -74,12 +75,10 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $categories= Category::where('active','=',1)->get();
+        $categories= Category::where('active','=',1)->get(); //visos aktyvios kategorijos
         $data['categories']= $categories;
-        $cat =Category::find($id);
+        $cat =Category::find($id); //pagal konkretų ID
         $data['cat'] = $cat;
-
-
         return view('category.edit',$data);
 
 
@@ -98,9 +97,9 @@ class CategoryController extends Controller
         $category->title =$request->get('title');
         $category->slug =Str::slug($request->get('title'),'-');
         $category->parent_id=$request->parent_id;
-
         $category->save();
-        return redirect()->back()->with('message','Kategorija sukurta');
+        return redirect()->action('CategoryController@index');
+//        return redirect()->back()->with('message','Kategorija sukurta');
     }
 
     /**
@@ -114,5 +113,6 @@ class CategoryController extends Controller
         $category = Category::find($id);
         $category->active = 0;
         $category->save();
+        return redirect()->back();
     }
 }

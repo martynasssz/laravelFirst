@@ -12,10 +12,11 @@
                     <a class="nav-link" href="{{route('advert.index')}}"> Adverts panel </a>
                     <a class="nav-link" href="{{'#'}}"> Users </a>
                     <a class="nav-link" href="{{'#'}}"> Roles </a>
-                    <a class="nav-link" href="{{route('category.index')}}"> Categories </a>
+                    <a class="nav-link" href="{{route('category.index')}}"> Categories panel </a>
                     <a class="nav-link" href="{{route('cities.index')}}"> Cities panel </a>
-                    <a class="nav-link" href="{{route('messages.index')}}"> Messages </a>
+                    <a class="nav-link" href="{{route('messages.admin')}}"> Messages panel </a>
                 </li>
+
 
             </ul>
         </div>

@@ -31,9 +31,21 @@ Route::put('/admin/categories/{id}', 'CategoryController@update')->name('categor
 
 Route::resource('comment', 'CommentController');
 
-Route::get('/admin/messages', 'MessageController@index')->name('messages.index');
+//-------------Messages route start--------------------//
+//-------------Admin messages start--------------------//
+Route::get('/admin/messages', 'MessageController@indexAdmin')->name('messages.admin');
 
-//----------Cities routes start---------------------
+Route::get('/admin/messages/create', 'MessageController@create')->name('messages.create');
+
+Route::post('admin/messages/store','MessageController@store')->name('messages.store');
+
+Route::get('/admin/messages/sent', 'MessageController@showAllMsg')->name('messages.sent');
+//------------Admin messages end----------------------//
+
+
+
+//-------------Messages route end-----------------//
+//----------Cities routes start---------------------//
 Route::get('/admin/cities', 'CityController@index')->name('cities.index');
 
 Route::get('/admin/cities/create', 'CityController@create')->name('cities.create');
@@ -43,13 +55,13 @@ Route::post('/admin/cities/store', 'CityController@store')->name('cities.store')
 Route::get('/admin/cities/{id}/edit', 'CityController@edit')->name('cities.edit');
 
 Route::put('/admin/cities/{id}', 'CityController@update')->name('cities.update');
-//------------------Cities route finish-----------------
+//------------------Cities route end-----------------
 
 Route::delete('/admin/cities/{id}/delete', 'CityController@destroy')->name('cities.destroy');
 
 Route::get('/user/adverts', 'UserController@index')->name('user.advert');
 
-Route::get('/user/messages', 'MessageController@index')->name('messages.index');
+Route::get('/user/messages', 'MessageController@index')->name('messages.index'); //kelias iš nuorodos
 
 Route::get('/user/advert/create', 'AdvertController@create')->name('adverts.create');
 

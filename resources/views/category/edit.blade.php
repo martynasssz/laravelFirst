@@ -17,16 +17,15 @@
 
 
                             <select name="parent_id">
-                                <option value="0"> Parent kategorijai</option>
+                                <option value="0"> Koreguojama parent kategorija</option>
                                 @foreach($categories as $category)
-                                    @if($category->parent_id ==0 && !($category->id ==$cat->id))
-                                    <option value="{{$category->id}}"> {{$category->title}}</option>
+
+                                   @if($category->parent_id ==0 && !($category->id ==$cat->id)) {{-- tikriname, kad parent kategorijai nepriskirtumėm to pačios kategorijos--}}
+                                <option value="{{$category->id}}"> {{$category->title}}</option>
                                  @endif
                                         @endforeach
-
-
                             </select>
-                            <button class="btn btn-light"> update </button>
+                            <button class="btn alert-success mt-2"> Atnaujinti </button>
                         </form>
 
                     </div>

@@ -6,7 +6,7 @@
             @include('admin.sidebar')
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Miestai</div>
+                    <div class="card-header">Žinučių tipai</div>
                     <div class="card-body">
                         <form method="post" action="{{route('cities.store')}}">
                             @csrf

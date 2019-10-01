@@ -14,11 +14,11 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         @foreach($category->subCategories as $subCategory)
                             <a class="dropdown-item "
-                               href={{route('categories.show', $subCategory->slug)}}>{{$subCategory->title}}</a>
+                               href={{route('categories.show', $subCategory->slug)}}>{{$subCategory->title}} </a>
 
                             @foreach($subCategory->subCategories as $subsubCategory)
-                                <a class="dropdown-item " style="padding-left: 100px"
-                                   href={{route('categories.show', $subsubCategory->slug)}}>{{$subsubCategory->title}}</a>
+                                <a class="dropdown-item " style="padding-left: 50px"
+                                   href={{route('categories.show', $subsubCategory->slug)}}> {{$subsubCategory->title}}</a>
                                 </a>
 
                             @endforeach

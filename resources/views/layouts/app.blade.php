@@ -13,6 +13,7 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 
 
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -45,7 +46,7 @@
                 <ul class="navbar-nav ml-auto">
                     <!-- Authentication Links -->
                     @role('user|admin')
-                    <li class="nav-link">
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('advert.create') }}">{{ __('Create Advert') }}</a>
                     </li>
                     @endrole

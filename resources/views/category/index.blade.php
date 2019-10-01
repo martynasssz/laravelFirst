@@ -7,6 +7,8 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Kategorijos</div>
+{{--                    -------kategorijos kurimo pradžia---------}}
+
                     <div class="card">
                         <div class="card-header">Kategorijų kūrimas</div>
 
@@ -21,7 +23,7 @@
                                 <div class="form-group">
                                 <select class="form-control" name="parent_id">
 
-                                    <option value="0">-------</option>
+                                    <option value="0">Kuriama parent kategorija</option>
                                     @foreach($categories_create as $cat_create)
                                         <option value="{{$cat_create->id}}">{{$cat_create->title}}</option>
                                     @endforeach
@@ -33,50 +35,105 @@
 
                         </div>
                     </div>
+
 {{--                --- Kategorijos kurimo pabaiga------}}
                     <div class="card-body">
                         <table id="mytable" class="table table-bordred table-striped">
                             <thead>
                             <th><input type="checkbox" id="checkall"></th>
-                            <th>Category/SubCategory</th>
+                            <th>ParentCategory/Category/SubCategory</th>
                             <th>Edit</th>
                             <th>Delete</th>
                             </thead>
                             <tbody>
-                            @foreach($categories as $cat)
+                            @foreach($categories as $parent)
+
                                 <tr>
                                     <td><input type="checkbox" class="checkthis"></td>
-                                    <td>{{$cat->title}}</td>
+                                    <td>{{$parent->title}}</td>
+                                    <td><a class="btn btn-primary btn-sm" href="{{route('categories.edit',$parent->id)}}"> Edit </a></td>
                                     <td>
-                                        <a class="btn btn-primary btn-sm" href="{{route('categories.edit',$cat->id)}}"> Edit </a>
+                                        <form method="post" action="{{route('categories.destroy', $parent->id)}}">
+                                            @method('DELETE')
+                                            @csrf
+                                            <input type="submit" class="btn btn-danger btn-sm" value="Delete"/>
+                                        </form>
                                     </td>
+                                </tr>
+                                @foreach($parent->subCategories as $subCategory)
+                                <tr>
+                                    <td><input type="checkbox" class="checkthis"></td>
+                                    <td style="padding-left: 15px">/{{$subCategory->title}}</td>
+                                    <td><a class="btn btn-primary btn-sm" href="{{route('categories.edit',$subCategory->id)}}"> Edit </a></td>
                                     <td>
+                                        <form method="post" action="{{route('categories.destroy', $subCategory->id)}}">
+                                            @method('DELETE')
+                                            @csrf
+                                            <input type="submit" class="btn btn-danger btn-sm" value="Delete"/>
+                                        </form>
+                                    </td>
+                                </tr>
+                                    @foreach($subCategory->subCategories as $subSubCategory)
+                                        <tr>
+                                            <td><input type="checkbox" class="checkthis"></td>
+                                            <td style="padding-left: 30px">/{{$subSubCategory->title}}</td>
+                                            <td><a class="btn btn-primary btn-sm" href="{{route('categories.edit',$subSubCategory->id)}}"> Edit </a></td>
+                                            <td>
+                                                <form method="post" action="{{route('categories.destroy', $subSubCategory->id)}}">
+                                                @method('DELETE')
+                                                @csrf
+                                                <input type="submit" class="btn btn-danger btn-sm" value="Delete"/>
+                                                </form>
+
+
+                                            </td>
+
+                                        </tr>
+                                    @endforeach
+
+                                       @endforeach
+
+
+
+{{--                                    <td>--}}
+{{--                                        <a class="btn btn-primary btn-sm" href="{{route('categories.edit',$parent->id)}}"> Edit </a>--}}
+{{--                                    </td>--}}
+{{--                                    <td>--}}
+{{--                                        @foreach($parents->subCategories as $subCategory)--}}
+{{--                                            {{$subCategory->name}}--}}
+
+{{--                                                @foreach(($subCategory->subCategories as $subSubCategories))--}}
+
+{{--                                                    @endforeach--}}
+{{--                                            @endforeach--}}
+{{--                              -----     Arnoldo pab     ------}}
+{{--                                            --}}
 {{--                                        <form method="post" action="{{route('cities.destroy', $city->id)}}">--}}
 {{--                                            @method('DELETE')--}}
 {{--                                            @csrf--}}
 {{--                                            <input type="submit" class="btn btn-danger btn-sm" value="Delete"/>--}}
 {{--                                        </form>--}}
 
-                                    </td>
-                                </tr>
+{{--                                    </td>--}}
+{{--                                </tr>--}}
                             @endforeach
-                            @foreach($subcategories as $SubCategory)
-                                <tr>
-                                    <td><input type="checkbox" class="checkthis"></td>
-                                    <td style="padding-left: 30px" >/{{$SubCategory->title}}</td>
-                                    <td>
+{{--                            @foreach($subcategories as $SubCategory)--}}
+{{--                                <tr>--}}
+{{--                                    <td><input type="checkbox" class="checkthis"></td>--}}
+{{--                                    <td style="padding-left: 30px" >/{{$SubCategory->title}}</td>--}}
+{{--                                    <td>--}}
 {{--                                        <a class="btn btn-primary btn-sm" href="{{route('cities.edit',$city->id)}}"> Edit </a>--}}
-                                    </td>
-                                    <td>
+{{--                                    </td>--}}
+{{--                                    <td>--}}
 {{--                                        <form method="post" action="{{route('cities.destroy', $city->id)}}">--}}
 {{--                                            @method('DELETE')--}}
 {{--                                            @csrf--}}
 {{--                                            <input type="submit" class="btn btn-danger btn-sm" value="Delete"/>--}}
 {{--                                        </form>--}}
 
-                                    </td>
-                                </tr>
-                            @endforeach
+{{--                                    </td>--}}
+{{--                                </tr>--}}
+{{--                            @endforeach--}}
 
                             </tbody>
                         </table>
