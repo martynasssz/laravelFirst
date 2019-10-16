@@ -1,14 +1,14 @@
-<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+<nav class="navbar navbar-light" >
     <ul class="nav nav-pills">
         @foreach($categories as $category)
 
             @if(count($category->subCategories) === 0)
                 <li class="nav-item">
-                    <a class="nav-link active" href="#" role="button">{{$category->title}}</a>
+                    <a class="nav-link active" href={{route('categories.show', $category->slug)}} role="button">{{$category->title}}</a>
             @else
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                    <a class="nav-link dropdown-toggle" href={{route('categories.show', $category->slug)}} role="button" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">{{$category->title}}</a>
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -24,9 +24,9 @@
                             @endforeach
                         @endforeach
                     </div>
-            @endif
+                    @endif
                 </li>
-        @endforeach
+                @endforeach
 
     </ul>
 </nav>

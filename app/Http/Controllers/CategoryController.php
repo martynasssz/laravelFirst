@@ -19,13 +19,14 @@ class CategoryController extends Controller
      //   $categories= Category::where('active','=',1)->where('parent_id','=',0)->get();
       //  $subcategories=Category::where('active','=',1)->where('parent_id','!=',0)->get();
       //  $data['categories']= $categories;
-        $data['categories']=Category::where('active','=',1)->where('parent_id','=',0)->get();;
+      $data['categories']=Category::where('active','=',1)->where('parent_id','=',0)->get();
 
        // $data['subcategories']=$subcategories;
       $data['categories_create'] = Category::all();
        // dd($categories);
         return view('category.index', $data);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -63,6 +64,8 @@ class CategoryController extends Controller
     public function  show(Category $category)
     {
        $data['category'] = $category;
+       $categoryIds = Category::getCategoriesBranchIds($category->id);
+       $data['adverts']=Advert::whereIn('category_id', $categoryIds)->get();
 
        return view('category.single',$data);
     }

@@ -6,8 +6,6 @@
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
 
-
-
         <title>Skelbimai</title>
 
         <!-- Fonts -->

@@ -41,7 +41,8 @@
                     <div class="card-header">{{$category->title}}</div>
                     <div class="card-body">
                         <div class="row">
-                            @foreach($category->adverts as $advert)
+                            @foreach($adverts as $advert)
+
 
                                 <div class="card mb-3" style="max-width: 900px;">
                                     <div class="row no-gutters">
@@ -55,7 +56,7 @@
                                                 <p class="card-text"> {{ $advert-> content}}</p>
                                                 <p class="card-text">
                                                     <small class="text-muted">Kaina: {{ $advert-> price}} €</small>
-                                                    <a href="advert/{{$advert->slug}}"
+                                                    <a href="{{route('advert.show', $advert->slug)}}"
                                                        class="btn btn-outline-secondary float-right btn-sm">Detaliau</a>
                                                 </p>
                                             </div>

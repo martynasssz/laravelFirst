@@ -22,7 +22,7 @@
                                             <p class="card-text"> {{ $advert-> content}}</p>
                                             <p class="card-text">
                                                 <small class="text-muted">Kaina: {{ $advert-> price}} €</small>
-                                                <a href="advert/{{$advert->slug}}"
+                                                <a href="{{route('advert.show', $advert->slug)}}"
                                                    class="btn btn-outline-secondary float-right btn-sm">Detaliau</a>
                                             </p>
                                         </div>

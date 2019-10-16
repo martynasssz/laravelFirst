@@ -7,26 +7,9 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Skelbimai</div>
-                    <div>
-                        <form action="{{route('adverts.index')}}" method="get">
-                            <div class="form-group">
-                                <input type="search" name="search" class="form-control">
-                                <span class="form-group-btn">
-                                    <button type="submit" class="btn btn primary">Search </button>
-
-                                </span>
-
-
-                            </div>
-
-
-                        </form>
-
-                    </div>
-
 
                     <div class="card-body">
-                        @foreach($adverts as $advert)
+                        @foreach($category as $advert)
                             <div class="card mb-3" style="max-width: 900px;">
                                 <div class="row no-gutters">
                                     <div class="col-md-4">
@@ -48,7 +31,7 @@
                             </div>
 
                         @endforeach
-                        {{$adverts->links()}}
+{{--                        {{$adverts->links()}}--}}
 
                     </div>
 
@@ -57,3 +40,4 @@
         </div>
     </div>
 @endsection
+

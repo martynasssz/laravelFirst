@@ -10,16 +10,27 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
-    return view('welcome');
-
+    return view('main');
 });
+
 Auth::routes();
 
-Route::get('/home','HomeController@index');
+// ---------------Category advert start-----------------------------------//
+
+//Route::get('/categories','CategoryController@show')->name('category.single');
+
+//Route::get('/category/adverts', 'AdvertController@index')->name('advert.index');
+//
+//Route::get('adverts', 'AdvertController@show_nt_adverts')->name('adverts.nt_advert');
+
+//Route::get('/home','HomeController@index'); - atjungiamas kaip nereikalingas
 
 //Route::get('/admin/advert', 'AdvertController@index')->name('admin.adverts');
+
+
+//Route::get('/', 'AdvertController@index')->name('adverts.index');
+
 Route::resource('categories','CategoryController');
 
 Route::get('/admin/categories', 'CategoryController@index')->name('category.index');
@@ -69,9 +80,13 @@ Route::get('/user/messages/{id}', 'MessageController@show')->name('message.show'
 
 Route::resource('advert','AdvertController');
 
+
+
 //Route::resource('user', 'UserController');
 
 Route::resource('admin', 'AdminController');
+
+Route::get('/search', 'AdvertController@search')->name('adverts.index');
 
 //Route::resource('messages','MessageController');
 

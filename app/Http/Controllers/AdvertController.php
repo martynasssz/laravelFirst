@@ -7,9 +7,11 @@ use App\Attribute;
 use App\Category;
 use App\City;
 use App\Comment;
+use App\Mail\NewAdvert;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str; //nebuvo šio kontrolerio
 use App\AttributeSet;
 use App\AttributeValue;
@@ -22,14 +24,28 @@ class AdvertController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+//    public function __construct()
+//    {
+//        $this->middleware('auth');
+//    }
+
+
     public function index()
     {
 //      $adverts = Advert::where('active', '=', 1)->get(); uzkomentuota nes naudojam scope apsirase advert modelyje
 //      $adverts = Advert::active()->get(); be puslapiavimo
         $adverts = Advert::active()->paginate(3);
         $data['adverts'] = $adverts;
+//      $data['categories']=Category::where('active','=',1)->where('parent_id','=',0)->get();
         return view('adverts.index', $data); //atvaizduoja templatą
         // return view('admin.adverts', $data);
+    }
+
+    public function search(Request $request){
+        $search = $request->get('search');
+        $adverts=Advert::active()->where('title','like','%'.$search.'%')->paginate(5);
+        $data['adverts'] = $adverts;
+        return view ('adverts.index',$data);
     }
 
 
@@ -42,12 +58,13 @@ class AdvertController extends Controller
     {
 //      $categories =Category::all(); //galima paprastai netrumpinant
 //      $data['categories']=$categories;
+        $this->middleware('auth');
         $user = Auth::user();
         if ($user && ($user->hasRole('admin') || $user->hasRole('user'))) {
             $data['categories'] = Category::where('active', '=', 1)->get();   ///---perrasyti i modeli 2019-09-19!!!!-----
             $data['title'] = 'Skelbimų kurimas';
             $data['attribute_sets'] = AttributeSet::all();
-            $data['cities'] =City::All();
+            $data['cities'] = City::All();
             return view('adverts.create', $data);
         } else {
             echo 'no permissions';
@@ -74,6 +91,13 @@ class AdvertController extends Controller
         $advert->slug = Str::slug($request->title, '-');
         $advert->attribute_set_id = $request->attribute_set;
         $advert->save();
+
+        $data = [
+            'name' => 'Martynas'
+        ];
+
+        Mail::to('userio@email.com')->send(new NewAdvert($data));
+
         return redirect()->route('advert.edit', $advert->id);
     }
 
@@ -111,13 +135,17 @@ class AdvertController extends Controller
      */
     public function edit($id)
     {
+        $user = Auth::user();
         $advert = Advert::find($id);
-//        $advert=Advert::find($id);
-        $data['advert'] = $advert;
-        $data['attribute_sets'] = AttributeSet::all();
-        $data['attributes'] = $advert->attributeSet->relations;
-        $data['categories'] = Category::where('active', '=', 1)->get();
-        return view('adverts.edit', $data);
+            if ($user && $advert->user_id == (auth()->user()->id) || $user->hasRole('admin')) { //identifikuoja skelbimo useri
+            $data['advert'] = $advert;
+            $data['attribute_sets'] = AttributeSet::all();
+            $data['attributes'] = $advert->attributeSet->relations;
+            $data['categories'] = Category::where('active', '=', 1)->get();
+            return view('adverts.edit', $data);
+        } else {
+            'no permissions';
+        }
     }
 
     /**
@@ -177,10 +205,15 @@ class AdvertController extends Controller
      */
     public function destroy($id)
     {
+        $user = Auth::user();
         $advert = Advert::find($id);
-        $advert->active = 0;
-        $advert->save();
-        return redirect()->action('AdvertController@index');
+        if ($user && $advert->user_id == (auth()->user()->id) || $user->hasRole('admin')) {
+            $advert->active = 0;
+            $advert->save();
+            return redirect()->action('UserController@index');
+        } else {
+            'no permissions';
+        }
 
     }
 

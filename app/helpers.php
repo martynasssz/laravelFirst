@@ -19,3 +19,13 @@ if (!function_exists('auth_separation')){
         return $loginto;
     }
 }
+
+if(!function_exists('truncateWords')){
+   function truncateWords($input, $numwords, $padding="")
+  {
+      $output = strtok($input, " \n");
+      while(--$numwords > 0) $output .= " " . strtok(" \n");
+      if($output != $input) $output .= $padding;
+      return $output;
+  }
+}

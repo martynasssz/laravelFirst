@@ -24,6 +24,9 @@
 
                         @endforeach
                     </div>
+                    @role('user|admin')
+                    @if ($advert->user_id == Auth::user()->id)
+
                     <div>
                     <form method="post" action="{{route('advert.destroy', ['id' => $advert->id])}}">
                         @method('DELETE')
@@ -37,6 +40,8 @@
                         </button>
                     </form>
                     </div>
+                    @endif
+                    @endrole
                 </div>
             </div>
         </div>
@@ -49,12 +54,15 @@
                             <h6>
                                 <small>{{$comment->created_at}}</small>
                             </h6>
-
+                            @role('admin|user')
+                            @if (($advert->user_id == Auth::user()->id|| Auth::user()->id == $comment->user_id))
                             <form method="post" action="{{route('comment.destroy', $comment->id)}}">
                                 @method('DELETE')
                                 @csrf
                                 <button type="submit" class="btn btn-dark float-right btn-sm">Delete</button>
                             </form>
+                            @endif
+                            @endrole;
                         </div>
 
 
@@ -74,7 +82,7 @@
                     {{--                    <input type="hidden" value="{{$advert->user_id}}" name="userId">--}}
 
                     <button class="btn btn-outline-secondary mt-2">Komentuoti</button>
-                    @else <b>{{'Norėdami komentuoti turite prisijungti'}} </b>
+                     @else <b>{{'Norėdami komentuoti turite prisijungti'}} </b>
                     @endrole
                 </form>
             </div>

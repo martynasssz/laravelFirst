@@ -1,3 +1,4 @@
+
 <div class="col-md-3">
 
     <div class="card">
@@ -16,9 +17,13 @@
                     <a class="nav-link" href="{{route('cities.index')}}"> Cities panel </a>
                     <a class="nav-link" href="{{route('messages.admin')}}"> Messages panel </a>
                 </li>
-
-
             </ul>
+
+
+
+
+
+
         </div>
     </div>
     <br/>
