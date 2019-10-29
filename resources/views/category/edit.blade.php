@@ -7,15 +7,15 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Kategorijos</div>
-
                     <div class="card-body">
                         <form method="POST" action="{{route('category.update', $cat->id)}}">
                             <input name="_method" type="hidden" value="PUT">
                             @method('PUT')
                             @csrf
-                            <input class=form-control" type="text" name="title" placeholder="Pavadinimas" value="{{$cat->title}}">
-
-
+                            <div class="form-group">
+                            <input class=fform-group" type="text" name="title" placeholder="Pavadinimas" value="{{$cat->title}}">
+                            </div>
+                            <div class="form-group">
                             <select name="parent_id">
                                 <option value="0"> Koreguojama parent kategorija</option>
                                 @foreach($categories as $category)
@@ -25,7 +25,8 @@
                                  @endif
                                         @endforeach
                             </select>
-                            <button class="btn alert-success mt-2"> Atnaujinti </button>
+                                </div>
+                            <button class="btn btn-secondary btn-sm mt-2"> Atnaujinti </button>
                         </form>
 
                     </div>

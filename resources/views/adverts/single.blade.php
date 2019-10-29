@@ -5,41 +5,49 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{$advert->title}}</div>
-
+                    <div class="card-header font-weight-bold h5">{{$advert->title}}</div>
                     <div class="card-body">
-                        <div class="alert"> Kategorija: {{$advert->category->title}}    </div>
-                        <img class="img-fluid" src="{{$advert->image}}" alt="Italian Trulli">
-                        {{$advert->content}}
-                        <div class="card-columns mt-4">Kaina: {{ $advert->price}} €</div>
-
+                        <div class="alert h5 pl-0 pb-0 pt-0 font-weight-bold"> {{$advert->category->title}}    </div>
+                        <img class="img-fluid h5" src="{{$advert->image}}" alt="Italian Trulli">
+                        <div class="h5">{{$advert->content}}</div>
+                        <div class="card-columns mt-5 h5">
+                            <span class="font-weight-bold"> Kaina:</span> {{ $advert->price}} €
+                        </div>
                     </div>
+                    <div class="text-center font-weight-bold h4 "> Papildoma informacija</div>
                     <div class="card-body">
-                    Atribute Set: {{$advert->attributeSet->name}}
-
-
-                        @foreach ($attributeValues as $attributeValue)
-                            <div class="font-weight-bold"> {{$attributeValue->values->label}}</div>
-                            <div class="tm-2">  {{$attributeValue->value}}  </div>
-
-                        @endforeach
+                        <table>
+                            <tbody>
+                            <tr>
+                                <th class=" font-weight-bold border-bottom h6">Objekto vieta:</th>
+                                <td class="pl-3 border-bottom h6">{{$advert->city->name}}</td>
+                            </tr>
+{{--                            <tr>--}}
+{{--                                <th class="font1 border-bottom"> Nekilnojamojo turto parametrai:</th>--}}
+{{--                                <td class="pl-3 font-weight-bold  border-bottom">{{$advert->attributeSet->name}}</td>--}}
+{{--                            </tr>--}}
+{{--                            @foreach ($attributeValues as $attributeValue)--}}
+{{--                                <div class="font-weight-bold"> {{$attributeValue->values->label}}</div>--}}
+{{--                                <div class="tm-2">  {{$attributeValue->value}}  </div>--}}
+{{--                            @endforeach--}}
+                            </tbody>
+                        </table>
                     </div>
+
                     @role('user|admin')
-                    @if ($advert->user_id == Auth::user()->id)
-
-                    <div>
-                    <form method="post" action="{{route('advert.destroy', ['id' => $advert->id])}}">
-                        @method('DELETE')
-                        @csrf
-                        <button type="submit" class="btn btn-dark float-right btn-sm">Delete</button>
-                    </form>
-
-                    <form>
-                        <button class="btn btn-dark float-right btn-sm"
-                                formaction="{{route('advert.edit', $advert->id)}}">Edit
-                        </button>
-                    </form>
-                    </div>
+                    @if ($advert->user_id == Auth::user()->id || Auth::user()->id == $advert->user_id)
+                        <div>
+                            <form method="post" action="{{route('advert.destroy', ['id' => $advert->id])}}">
+                                @method('DELETE')
+                                @csrf
+                                <button type="submit" class="btn btn-outline-secondary float-right btn-sm">Delete</button>
+                            </form>
+                            <form>
+                                <button class="btn btn-outline-secondary float-right btn-sm"
+                                        formaction="{{route('advert.edit', $advert->id)}}">Edit
+                                </button>
+                            </form>
+                        </div>
                     @endif
                     @endrole
                 </div>
@@ -56,21 +64,18 @@
                             </h6>
                             @role('admin|user')
                             @if (($advert->user_id == Auth::user()->id|| Auth::user()->id == $comment->user_id))
-                            <form method="post" action="{{route('comment.destroy', $comment->id)}}">
-                                @method('DELETE')
-                                @csrf
-                                <button type="submit" class="btn btn-dark float-right btn-sm">Delete</button>
-                            </form>
+                                <form method="post" action="{{route('comment.destroy', $comment->id)}}">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline-secondary float-right btn-sm">Delete</button>
+                                </form>
                             @endif
-                            @endrole;
+                            @endrole
                         </div>
-
-
                         <div class="p-2">{{ $comment->content}}</div>
                     </div>
                 @endforeach
             </div>
-
             <div class="card-body col-md-8">
                 <form method="post" action="{{route('comment.store')}}">
                     @csrf
@@ -81,8 +86,8 @@
                     <input type="hidden" value="{{$advert->id}}" name="advertId">
                     {{--                    <input type="hidden" value="{{$advert->user_id}}" name="userId">--}}
 
-                    <button class="btn btn-outline-secondary mt-2">Komentuoti</button>
-                     @else <b>{{'Norėdami komentuoti turite prisijungti'}} </b>
+                    <button class="btn btn-secondary mt-2">Komentuoti</button>
+                    @else <b>{{'Norėdami komentuoti turite prisijungti'}} </b>
                     @endrole
                 </form>
             </div>

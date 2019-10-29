@@ -78,6 +78,8 @@ Route::get('/user/advert/create', 'AdvertController@create')->name('adverts.crea
 
 Route::get('/user/messages/{id}', 'MessageController@show')->name('message.show');
 
+
+
 Route::resource('advert','AdvertController');
 
 
@@ -94,3 +96,9 @@ Route::get('/search', 'AdvertController@search')->name('adverts.index');
 //Route::get('messages/{id}', 'MessageController@show')->name('message.show');
 
 //Route::get('api/subscribers','Api\SubscribersController@index');
+//Route::get('advert/action','AdvertController@action')->name('adverts.ajax.search_result'); Roberto pagalba
+
+
+//Route::get('/live_search','LiveSearch@index'); //set route for live_search controller. Call index method on live search controller
+//Route::get('live_search/action','LiveSearch@action')->name('live_search.action'); //name for ajax
+

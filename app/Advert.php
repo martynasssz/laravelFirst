@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Advert extends Model
 {
-    public function category(){
-        return $this->hasOne('App\Category','id','category_id');
+    public function category()
+    {
+        return $this->hasOne('App\Category', 'id', 'category_id');
     }
 
 
@@ -18,16 +19,22 @@ class Advert extends Model
 
     public function scopeActive($query) //tam, kad advert kontroleryje nereikėtu rasyti where('active',1) index metode;
     {
-        return $query->where('active',1);
+        return $query->where('active', 1);
     }
 
     public function attributeSet()
     {
-        return $this->hasOne('App\AttributeSet', 'id','attribute_set_id');
+        return $this->hasOne('App\AttributeSet', 'id', 'attribute_set_id');
     }
 
     public function attributes()
     {
-        return $this->hasMany('App\AttributeValue','advert_id', 'id');
+        return $this->hasMany('App\AttributeValue', 'advert_id', 'id');
     }
+
+    public function city()
+    {
+        return $this->hasOne('App\City','id', 'city_id');
+    }
+
 }

@@ -12,7 +12,7 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="name">Pavadinimas</label>
-                                    <input type="text" class="form-control" name="title" placeholder="Pavadinimas">
+                                    <input type="text" class="form-control" name="title">
                                 </div>
                                 <div class="form-group">
                                     <label for="content_text">Aprašymas</label>
@@ -20,17 +20,17 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="image">Įkelti nuotrauką</label>
-                                    <input type="text" class="form-control" name="image" placeholder="Nuotrauka">
+                                    <label for="image">Įkelti nuotraukos nuorodą</label>
+                                    <input type="text" class="form-control" name="image">
                                 </div>
                                 <div class="form-group">
                                     <label for="price">Kaina</label>
-                                    <input class="form-control" type="number" name="price" placeholder="Kaina">
+                                    <input class="form-control" type="number" name="price">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleFormControlSelect2">Pasirinkti kategoriją</label>
-                                    <select multiple class="form-control col-md-4" name="category_id">
-                                         <option> Pasirinkti kategorija</option>
+                                    <select class="form-control col-md-4" name="category_id">
+                                         <option disabled> Pasirinkti kategorija</option>
                                     @foreach($categories as $cat)
                                     <option value="{{$cat->id}}"> {{$cat->title}}</option>
                                         @endforeach
@@ -38,7 +38,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="locartion">Objekto vieta</label>
-                                    <select multiple class="form-control col-md-4" name="category_id">
+                                    <select class="form-control col-md-4" name="city_id">
+                                        <option disabled>Pasirinkti miestą</option>
                                             @foreach($cities as $city)
                                             <option value="{{$city->id}}"> {{$city->name}}</option>
                                         @endforeach
@@ -46,18 +47,18 @@
                                 </div>
 
 
+{{--                                    atjunta kol bus sutvarkyta--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="attribute_set">Pridėti papildomą informaciją</label>--}}
+{{--                                    <select multiple class="form-control col-md-4" name="attribute_set">--}}
+{{--                                        @foreach($attribute_sets as $attributeSet)--}}
 
-                                <div class="form-group">
-                                    <label for="attribute_set">Papildoma informacija</label>
-                                    <select multiple class="form-control col-md-4" name="attribute_set">
-                                        @foreach($attribute_sets as $attributeSet)
+{{--                                            <option value="{{($attributeSet->id)}}"> {{($attributeSet->name)}} </option>--}}
 
-                                            <option value="{{($attributeSet->id)}}"> {{($attributeSet->name)}} </option>
-
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <button class="btn btn-info"> Toliau</button>
+{{--                                        @endforeach--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
+                                <button class="btn btn-secondary"> Sukurti</button>
                         </form>
                     </div>
 

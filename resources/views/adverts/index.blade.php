@@ -9,47 +9,38 @@
                     <div class="card-header">Skelbimai</div>
                     <div>
                         <form action="{{route('adverts.index')}}" method="get">
-                            <div class="form-group">
-                                <input type="search" name="search" class="form-control">
-                                <span class="form-group-btn">
-                                    <button type="submit" class="btn btn primary">Search </button>
-
+                            <div class="input-group">
+                                <input type="text" name="search" class="form-control">
+                                <span class="input-group-prepend">
+                                    <button type="submit"  class="btn btn primary">Ieškoti</button>
                                 </span>
-
-
                             </div>
-
-
                         </form>
-
                     </div>
-
-
                     <div class="card-body">
-                        @foreach($adverts as $advert)
-                            <div class="card mb-3" style="max-width: 900px;">
-                                <div class="row no-gutters">
-                                    <div class="col-md-4">
-                                        <img src="{{ $advert-> image}}" class="card-img" alt="...">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <h6>{{$advert->category->title}}</h6>
-                                            <h5 class="card-title">{{$advert->title}}</h5>
-                                            <p class="card-text"> {{truncateWords($advert-> content,100,"...")}}</p>
-                                            <p class="card-text">
-                                                <small class="text-muted">Kaina: {{ $advert-> price}} €</small>
-                                                <a href="advert/{{$advert->slug}}"
-                                                   class="btn btn-outline-secondary float-right btn-sm">Detaliau</a>
-                                            </p>
+                        <div class="row">
+                            @foreach($adverts as $advert)
+                                <div class="card mb-3 " style="max-width: 900px;  ">
+                                    <div class="row no-gutters">
+                                        <div class="col-md-4 " style="height: 200px">
+                                            <img src="{{ $advert-> image}} " class="card-img h-100 w-100" alt="...">
+                                        </div>
+                                        <div class="col-md-8  ">
+                                            <div class="card-body">
+                                                <h6>{{$advert->category->title}}</h6>
+                                                <h5 class="card-title">{{$advert->title}}</h5>
+                                                {{-- <p class="card-text"> {{ $advert-> content}}</p>--}}
+                                                <p class="card-text"> </p>
+                                                <div class="text-muted">Kaina: {{ $advert-> price}} €</div>
+                                                <a href="{{route('advert.show', $advert->slug)}}"
+                                                   class="btn btn-outline-secondary float-right btn-sm mb-0">Detaliau</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                        @endforeach
-                        {{$adverts->links()}}
-
+                            @endforeach
+                            {{$adverts ->  links()}}
+                        </div>
                     </div>
 
                 </div>

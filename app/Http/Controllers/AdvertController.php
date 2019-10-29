@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str; //nebuvo šio kontrolerio
 use App\AttributeSet;
 use App\AttributeValue;
+use Illuminate\View\View;
+
 
 
 class AdvertController extends Controller
@@ -43,10 +45,50 @@ class AdvertController extends Controller
 
     public function search(Request $request){
         $search = $request->get('search');
-        $adverts=Advert::active()->where('title','like','%'.$search.'%')->paginate(5);
-        $data['adverts'] = $adverts;
-        return view ('adverts.index',$data);
+        if($search !='') {
+            $adverts=Advert::active()->where('title','like','%'.$search.'%')->paginate(5);
+            $data['adverts'] = $adverts;
+            return view ('adverts.index',$data);
+        } else
+        {
+            $adverts= Advert::active()->paginate(3);
+            $data['adverts'] = $adverts;
+            return view ('adverts.index',$data);
+        }
     }
+
+//    public function action(Request $request)
+//    {
+//        if ($request->ajax()) //This condition will check if this method has receive any Ajax request or not
+//            $query = $request->get('query');
+//        if ($query != '') {
+//
+//            $data = advert::active()->where('title', 'like', '%' . $query . '%')->paginate(5);
+//            $data['adverts'] = $data;
+//            return view('adverts.index', $data);
+//        } else {
+//            $data = advert::active()->paginate(5);
+//            $data['adverts'] = $data;
+//            return view('adverts.index', $data);
+//        }
+//
+//        $total_row = $data->count();
+//        if ($total_row > 0) {
+//            return View::make('adverts.ajax.search_results')->with('adverts', $data)->render();
+//
+//        } else //write html table code  with no data found message
+//        {
+//            $output = '
+//                <tr>
+//                    <td align="center" colspan="5">No Data found </td>
+//                </tr>
+//                ';
+//        }
+//        $data = array(
+//            'table_data' => $output
+//        );
+//        echo json_encode($data);
+//    }
 
 
     /**
@@ -60,15 +102,13 @@ class AdvertController extends Controller
 //      $data['categories']=$categories;
         $this->middleware('auth');
         $user = Auth::user();
-        if ($user && ($user->hasRole('admin') || $user->hasRole('user'))) {
+
             $data['categories'] = Category::where('active', '=', 1)->get();   ///---perrasyti i modeli 2019-09-19!!!!-----
             $data['title'] = 'Skelbimų kurimas';
             $data['attribute_sets'] = AttributeSet::all();
             $data['cities'] = City::All();
             return view('adverts.create', $data);
-        } else {
-            echo 'no permissions';
-        }
+
     }
 
     /**
@@ -79,26 +119,27 @@ class AdvertController extends Controller
      */
     public function store(Request $request)
     {
+        $this->middleware('auth');
         $user = auth()->user();
         $advert = new Advert();
         $advert->title = $request->title; //duombazes title uzsetina formos lauko reišme
         $advert->content = $request->content_text;
         $advert->category_id = $request->category_id;
         $advert->image = $request->image;
-        $advert->city_id = 1;
+        $advert->city_id = $request->city_id;
         $advert->user_id = $user->id;
         $advert->price = $request->price;
         $advert->slug = Str::slug($request->title, '-');
-        $advert->attribute_set_id = $request->attribute_set;
+      //  $advert->attribute_set_id = $request->attribute_set; (laikinai atjungta kol bus sutvarkyta)
         $advert->save();
 
-        $data = [
-            'name' => 'Martynas'
-        ];
-
-        Mail::to('userio@email.com')->send(new NewAdvert($data));
-
-        return redirect()->route('advert.edit', $advert->id);
+//        $data = [
+//            'name' => 'Martynas'
+//        ];
+//
+//        Mail::to('userio@email.com')->send(new NewAdvert($data));
+        return redirect()->action('UserController@index');
+        //return redirect()->route('advert.edit', $advert->id); (laikinai atjungta kol bus sutvarkyta)
     }
 
     /**
@@ -119,6 +160,7 @@ class AdvertController extends Controller
         $data['attributeValues'] = $advert->attributes;
 
 
+
         //  $data['attribute_values'] = $advert->attributeValue->values;
 
 //        echo '<pre>';
@@ -137,11 +179,13 @@ class AdvertController extends Controller
     {
         $user = Auth::user();
         $advert = Advert::find($id);
-            if ($user && $advert->user_id == (auth()->user()->id) || $user->hasRole('admin')) { //identifikuoja skelbimo useri
+        if ($user && $advert->user_id == (auth()->user()->id) || $user->hasRole('admin')) { //identifikuoja skelbimo useri
             $data['advert'] = $advert;
             $data['attribute_sets'] = AttributeSet::all();
             $data['attributes'] = $advert->attributeSet->relations;
             $data['categories'] = Category::where('active', '=', 1)->get();
+            $data['cities'] = City::All();
+
             return view('adverts.edit', $data);
         } else {
             'no permissions';
@@ -157,7 +201,10 @@ class AdvertController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->middleware('auth');
+        $user = auth()->user();
         $data = $request->except('_token');
+
 
         // $data  = $request->keys();
         // dd($data);
@@ -168,9 +215,10 @@ class AdvertController extends Controller
                 $attributes[$attributeName] = $single;
             }
         }
-        foreach ($attributes as $name => $value) {
-            $attributeObject = Attribute::where('name', $name)->first();
-            $oldValue = AttributeValue::where('attribute_id', $attributeObject->id)
+
+            foreach ($attributes as $name => $value) {
+                $attributeObject = Attribute::where('name', $name)->first();
+                $oldValue = AttributeValue::where('attribute_id', $attributeObject->id)
                 ->where('advert_id', $id)->first();
             if ($oldValue === null) {
                 $newValue = new AttributeValue();
@@ -189,8 +237,8 @@ class AdvertController extends Controller
         $advert->content = $request->content_text;
         $advert->category_id = $request->category_id;
         $advert->image = $request->image;
-        $advert->city_id = 1;
-        $advert->user_id = 1;
+        $advert->city_id = $request->city_id;
+        $advert->user_id = $user->id;
         $advert->price = $request->price;
         $advert->slug = Str::slug($request->title, '-');
         $advert->save();
@@ -216,6 +264,21 @@ class AdvertController extends Controller
         }
 
     }
+
+    public function restore($id)
+    {
+        $user = Auth::user();
+        $advert = Advert::find($id);
+        if ($user && $advert->user_id == (auth()->user()->id) || $user->hasRole('admin')) {
+            $advert->active = 0;
+            $advert->save();
+            return redirect()->action('UserController@index');
+        } else {
+            'no permissions';
+        }
+
+    }
+
 
 
 }

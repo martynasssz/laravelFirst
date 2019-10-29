@@ -38,11 +38,6 @@ class MessageController extends Controller
         } else {
             echo 'no permissions';
         }
-
-
-
-
-
     }
 
     /**
@@ -56,6 +51,8 @@ class MessageController extends Controller
         if ($user && $user->hasRole('admin')) {
             $data['users'] = User::all(); //paimam aktyvius userius User::active()->get()
             $data['msg_types'] = MessageType::all();
+            $data['messages']= Message::paginate(5);
+
             return view('messages.create', $data);
         } else {
             echo 'no permissions';
@@ -134,7 +131,7 @@ public function showAllMsg(){
     $user =Auth:: user();
     if ($user &&$user->hasRole('admin')) {
             $data['messages']= Message::paginate(5);
-            return view ('messages.sent',$data);
+            return view ('messages.create',$data);
        }
 }
 

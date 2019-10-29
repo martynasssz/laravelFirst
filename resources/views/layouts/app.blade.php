@@ -11,14 +11,21 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://kit.fontawesome.com/1ff9de8572.js" crossorigin="anonymous"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Arimo&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rajdhani&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
 
 
 </head>
@@ -44,24 +51,26 @@
                     <!-- Authentication Links -->
                     @role('user|admin')
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('advert.create') }}">{{ __('Create Advert') }}</a>
+                        <a class="nav-link" href="{{ route('advert.create') }}">{{ __('Sukurti skelbimą') }}</a>
                     </li>
                     @endrole
 
                     @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Prisijungti') }}</a>
                         </li>
                         @if (Route::has('register'))
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Registruotis') }}</a>
                             </li>
                         @endif
                     @else
-
+                        @role('user')
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('messages.index')}}">Messages ({{$messageCount}})</a>
+                            <a class="nav-link " href="{{route('messages.index')}}">Messages ({{$messageCount}})</a>
                         </li>
+                        @endrole
+
 
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
@@ -70,12 +79,19 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('user.advert') }}">My adverts
-                                </a>
+                                @role('user')
+                                <a class="dropdown-item" href="{{ route('user.advert') }}">Mano skelbimai</a>
+                                @endrole
+                                @role('admin')
+                                <a class="dropdown-item" href="{{ route('admin.index') }}">Admin panelė</a>
+                                @endrole
+
+
+
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                    {{ __('Atsijungti') }}
                                 </a>
 
 

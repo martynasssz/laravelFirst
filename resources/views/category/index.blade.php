@@ -7,82 +7,87 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Kategorijos</div>
-{{--                    -------kategorijos kurimo pradžia---------}}
+                    {{--                    -------kategorijos kurimo pradžia---------}}
 
                     <div class="card">
-                        <div class="card-header">Kategorijų kūrimas</div>
 
                         <div class="card-body">
 
                             <form method="POST" action="{{route('categories.store')}}">
                                 @csrf
                                 <div class="form-group">
-                                <input class="form-control mt-2" type="text" name="title" placeholder="Pavadinimas">
+                                    <input class="form-control mt-2" type="text" name="title"
+                                           placeholder="Naujos kategorijos pavadinimas">
                                 </div>
 
                                 <div class="form-group">
-                                <select class="form-control" name="parent_id">
+                                    <select class="form-control" name="parent_id">
 
-                                    <option value="0">Kuriama parent kategorija</option>
-                                    @foreach($categories_create as $cat_create)
-                                        <option value="{{$cat_create->id}}">{{$cat_create->title}}</option>
-                                    @endforeach
+                                        <option value="0">Kuriama parent kategorija</option>
+                                        @foreach($categories_create as $cat_create)
+                                            <option value="{{$cat_create->id}}">{{$cat_create->title}}</option>
+                                        @endforeach
 
-                                </select>
+                                    </select>
                                 </div>
-                                <button class="btn alert-success mt-2"> Create</button>
+                                <button class="btn btn-secondary btn-sm mt-2"> Sukurti</button>
                             </form>
 
                         </div>
                     </div>
 
-{{--                --- Kategorijos kurimo pabaiga------}}
+                    {{--                --- Kategorijos kurimo pabaiga------}}
                     <div class="card-body">
                         <table id="mytable" class="table table-bordred table-striped">
                             <thead>
-                            <th><input type="checkbox" id="checkall"></th>
-                            <th>ParentCategory/Category/SubCategory</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>ID</th>
+                            <th>Tėvinė kategorija/Kategorija/Subkategorija</th>
+                            <th>Redaguoti</th>
+                            <th>Trinti</th>
                             </thead>
                             <tbody>
                             @foreach($categories as $parent)
-
                                 <tr>
-                                    <td><input type="checkbox" class="checkthis"></td>
-                                    <td>{{$parent->title}}</td>
-                                    <td><a class="btn btn-primary btn-sm" href="{{route('categories.edit',$parent->id)}}"> Edit </a></td>
+                                    <td><b>{{$parent->id}}</b></td>
+                                    <td><b>{{$parent->title}}</b></td>
+                                    <td><a class="btn btn-primary btn-sm"
+                                           href="{{route('categories.edit',$parent->id)}}"> Redaguoti </a></td>
                                     <td>
                                         <form method="post" action="{{route('categories.destroy', $parent->id)}}">
                                             @method('DELETE')
                                             @csrf
-                                            <input type="submit" class="btn btn-danger btn-sm" value="Delete"/>
+                                            <input type="submit" class="btn btn-danger btn-sm" value="Trinti"/>
                                         </form>
                                     </td>
                                 </tr>
                                 @foreach($parent->subCategories as $subCategory)
-                                <tr>
-                                    <td><input type="checkbox" class="checkthis"></td>
-                                    <td style="padding-left: 15px">/{{$subCategory->title}}</td>
-                                    <td><a class="btn btn-primary btn-sm" href="{{route('categories.edit',$subCategory->id)}}"> Edit </a></td>
-                                    <td>
-                                        <form method="post" action="{{route('categories.destroy', $subCategory->id)}}">
-                                            @method('DELETE')
-                                            @csrf
-                                            <input type="submit" class="btn btn-danger btn-sm" value="Delete"/>
-                                        </form>
-                                    </td>
-                                </tr>
-                                    @foreach($subCategory->subCategories as $subSubCategory)
-                                        <tr>
-                                            <td><input type="checkbox" class="checkthis"></td>
-                                            <td style="padding-left: 30px">/{{$subSubCategory->title}}</td>
-                                            <td><a class="btn btn-primary btn-sm" href="{{route('categories.edit',$subSubCategory->id)}}"> Edit </a></td>
-                                            <td>
-                                                <form method="post" action="{{route('categories.destroy', $subSubCategory->id)}}">
+                                    <tr>
+                                        <td>{{$parent->id}}->{{$subCategory->id}}</td>
+                                        <td style="padding-left: 15px">/{{$subCategory->title}}</td>
+                                        <td><a class="btn btn-primary btn-sm"
+                                               href="{{route('categories.edit',$subCategory->id)}}"> Redaguoti </a></td>
+                                        <td>
+                                            <form method="post"
+                                                  action="{{route('categories.destroy', $subCategory->id)}}">
                                                 @method('DELETE')
                                                 @csrf
-                                                <input type="submit" class="btn btn-danger btn-sm" value="Delete"/>
+                                                <input type="submit" class="btn btn-danger btn-sm" value="Trinti"/>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    @foreach($subCategory->subCategories as $subSubCategory)
+                                        <tr>
+                                            <td>{{$parent->id}}->{{$subCategory->id}}->{{$subSubCategory->id}}</td>
+                                            <td style="padding-left: 30px">/{{$subSubCategory->title}}</td>
+                                            <td><a class="btn btn-primary btn-sm"
+                                                   href="{{route('categories.edit',$subSubCategory->id)}}"> Redaguoti </a>
+                                            </td>
+                                            <td>
+                                                <form method="post"
+                                                      action="{{route('categories.destroy', $subSubCategory->id)}}">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <input type="submit" class="btn btn-danger btn-sm" value="Trinti"/>
                                                 </form>
 
 
@@ -91,74 +96,11 @@
                                         </tr>
                                     @endforeach
 
-                                       @endforeach
-
-
-
-{{--                                    <td>--}}
-{{--                                        <a class="btn btn-primary btn-sm" href="{{route('categories.edit',$parent->id)}}"> Edit </a>--}}
-{{--                                    </td>--}}
-{{--                                    <td>--}}
-{{--                                        @foreach($parents->subCategories as $subCategory)--}}
-{{--                                            {{$subCategory->name}}--}}
-
-{{--                                                @foreach(($subCategory->subCategories as $subSubCategories))--}}
-
-{{--                                                    @endforeach--}}
-{{--                                            @endforeach--}}
-{{--                              -----     Arnoldo pab     ------}}
-{{--                                            --}}
-{{--                                        <form method="post" action="{{route('cities.destroy', $city->id)}}">--}}
-{{--                                            @method('DELETE')--}}
-{{--                                            @csrf--}}
-{{--                                            <input type="submit" class="btn btn-danger btn-sm" value="Delete"/>--}}
-{{--                                        </form>--}}
-
-{{--                                    </td>--}}
-{{--                                </tr>--}}
+                                @endforeach
                             @endforeach
-{{--                            @foreach($subcategories as $SubCategory)--}}
-{{--                                <tr>--}}
-{{--                                    <td><input type="checkbox" class="checkthis"></td>--}}
-{{--                                    <td style="padding-left: 30px" >/{{$SubCategory->title}}</td>--}}
-{{--                                    <td>--}}
-{{--                                        <a class="btn btn-primary btn-sm" href="{{route('cities.edit',$city->id)}}"> Edit </a>--}}
-{{--                                    </td>--}}
-{{--                                    <td>--}}
-{{--                                        <form method="post" action="{{route('cities.destroy', $city->id)}}">--}}
-{{--                                            @method('DELETE')--}}
-{{--                                            @csrf--}}
-{{--                                            <input type="submit" class="btn btn-danger btn-sm" value="Delete"/>--}}
-{{--                                        </form>--}}
-
-{{--                                    </td>--}}
-{{--                                </tr>--}}
-{{--                            @endforeach--}}
-
-                            </tbody>
+                          </tbody>
                         </table>
 
-
-{{--                        <table class="table">--}}
-{{--                            <tr>--}}
-{{--                                <th scope="col">Category/SubCategory</th>--}}
-{{--                                <th scope="col">Edit</th>--}}
-{{--                                <th scope="col">Delete</th>--}}
-{{--                            </tr>--}}
-{{--                            @foreach($categories as $cat)--}}
-{{--                                <tr>--}}
-{{--                                    <td> {{$cat->title}}</td>--}}
-{{--                                </tr>--}}
-{{--                            @endforeach--}}
-{{--                            @foreach($subcategories as $subcat)--}}
-{{--                                <tr>--}}
-{{--                                    <td style="padding-left: 30px"> /{{$subcat->title}}</td>--}}
-{{--                                </tr>--}}
-{{--                            @endforeach--}}
-{{--                            <--}}
-
-
-{{--                        </table>--}}
                     </div>
 
                 </div>

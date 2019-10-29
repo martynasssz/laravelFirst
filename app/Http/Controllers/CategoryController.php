@@ -26,6 +26,20 @@ class CategoryController extends Controller
        // dd($categories);
         return view('category.index', $data);
     }
+    public function search(Request $request){
+        $search = $request->get('search');
+        if($search !='') {
+            $adverts=Advert::active()->where('title','like','%'.$search.'%')->paginate(5);
+            $data['adverts'] = $adverts;
+            return view ('category.show',$data);
+        } else
+        {
+            $adverts= Advert::active()->paginate(3);
+            $data['adverts'] = $adverts;
+            return view ('category.show',$data);
+        }
+    }
+
 
 
     /**
@@ -65,7 +79,7 @@ class CategoryController extends Controller
     {
        $data['category'] = $category;
        $categoryIds = Category::getCategoriesBranchIds($category->id);
-       $data['adverts']=Advert::whereIn('category_id', $categoryIds)->get();
+       $data['adverts']=Advert::whereIn('category_id', $categoryIds)->paginate(3);
 
        return view('category.single',$data);
     }

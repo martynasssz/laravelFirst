@@ -18,4 +18,9 @@ class Message extends Model
         return $this->hasOne('App\Type','id', 'type_id');
     }
 
+    public function users_name()
+    {
+        return $this->hasOne('App\User', 'id', 'receiver_id');
+    }
+
 }

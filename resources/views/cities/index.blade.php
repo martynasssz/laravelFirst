@@ -10,8 +10,8 @@
                     <div class="card-body">
                         <form method="post" action="{{route('cities.store')}}">
                             @csrf
-                            <input name="name" type="text" class="form-control mt-2" placeholder="Miestai">
-                            <button class="btn alert-success mt-2">Create</button>
+                            <input name="name" type="text" class="form-control mt-2" placeholder="Įveskite miestą">
+                            <button class="btn btn-secondary btn-sm mt-2">Sukurti</button>
                         </form>
                     </div>
                 </div>
@@ -20,25 +20,25 @@
 
                     <thead>
 
-                    <th><input type="checkbox" id="checkall"></th>
-                    <th>City</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th>ID</th>
+                    <th>Miestai</th>
+                    <th>Redaguoti</th>
+                    <th>Trinti</th>
                     </thead>
                     <tbody>
                     @foreach ($cities as $city)
                         <tr>
-                            <td><input type="checkbox" class="checkthis"></td>
+                            <td>{{$city->id}}</td>
                             <td>{{$city->name}}</td>
                             <td>
-                                <a class="btn btn-primary btn-sm" href="{{route('cities.edit',$city->id)}}"> Edit </a>
+                                <a class="btn btn-primary btn-sm" href="{{route('cities.edit',$city->id)}}"> Redaguoti </a>
                             </td>
                             <td>
                                 <form method="post" action="{{route('cities.destroy', $city->id)}}">
                                     @method('DELETE')
 
                                     @csrf
-                                    <input type="submit" class="btn btn-danger btn-sm" value="Delete"/>
+                                    <input type="submit" class="btn btn-danger btn-sm" value="Trinti"/>
                                 </form>
 
                             </td>

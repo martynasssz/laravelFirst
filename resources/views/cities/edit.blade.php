@@ -12,7 +12,7 @@
                             @csrf
                             @method('PUT')
                             <input value="{{$city->name}}" name="name" type="text" class="form-control mt-2"  placeholder="Miestai">
-                            <button class="btn alert-success mt-2">Atnaujinti</button>
+                            <button class="btn btn-secondary btn-sm mt-2">Atnaujinti</button>
                         </form>
                     </div>
                 </div>

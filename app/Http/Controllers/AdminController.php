@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Advert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 
 class AdminController extends Controller
 {
@@ -16,13 +18,56 @@ class AdminController extends Controller
     {
         $user = Auth::user();
         if ($user && ($user->hasRole('admin'))) {
-            return view('admin.admin');
+            $adverts = Advert::paginate(10);
+            $data['adverts'] = $adverts;
+            return view('admin.admin', $data);
         } else if ($user && ($user->hasRole('user'))) {
             return redirect()->action('UserController@index');
         } else {
             echo 'No permissions';
         }
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+//    public function adminIndex()
+//    {
+//        $user = Auth::user();
+//        if ($user && ($user->hasRole('admin'))) {
+////            $adverts = Advert::active()->paginate(15);
+//            $adverts = Advert::paginate(10);
+//            $data['adverts'] = $adverts;
+//            //  dd($data['adverts']);
+//            return view('admin.admin', $data);
+//        }
+//
+////
+////        $adverts = Advert::All();
+////        $data['adverts'] = $adverts;
+////        return view('admin.admin', $data); //atvaizduoja templatą
+//
+//    }
+
+
+
+
+    public function destroy($id)
+    {
+        $user = Auth::user();
+        $advert = Advert::find($id);
+        if ($user && $advert->user_id == (auth()->user()->id) || $user->hasRole('admin')) {
+            $advert->active = 0;
+            $advert->save();
+            return redirect()->action('AdminController@index');
+        } else {
+            'no permissions';
+        }
+
+    }
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -53,7 +98,18 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        //
+        {
+            $user = Auth::user();
+            $advert = Advert::find($id);
+            if ($user && $advert->user_id == (auth()->user()->id) || $user->hasRole('admin')) {
+                $advert->active = 1;
+                $advert->save();
+                return redirect()->action('AdminController@index');
+            } else {
+                'no permissions';
+            }
+
+        }
     }
 
     /**
@@ -85,8 +141,5 @@ class AdminController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
-    }
+
 }
