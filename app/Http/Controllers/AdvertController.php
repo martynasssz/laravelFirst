@@ -36,8 +36,11 @@ class AdvertController extends Controller
     {
 //      $adverts = Advert::where('active', '=', 1)->get(); uzkomentuota nes naudojam scope apsirase advert modelyje
 //      $adverts = Advert::active()->get(); be puslapiavimo
-        $adverts = Advert::active()->paginate(3);
+        $adverts = Advert::active()->paginate(5); //visus aktyvius israsus istraukia
+
         $data['adverts'] = $adverts;
+
+
 //      $data['categories']=Category::where('active','=',1)->where('parent_id','=',0)->get();
         return view('adverts.index', $data); //atvaizduoja templatą
         // return view('admin.adverts', $data);
@@ -270,7 +273,7 @@ class AdvertController extends Controller
         $user = Auth::user();
         $advert = Advert::find($id);
         if ($user && $advert->user_id == (auth()->user()->id) || $user->hasRole('admin')) {
-            $advert->active = 0;
+            $advert->active = 1;
             $advert->save();
             return redirect()->action('UserController@index');
         } else {

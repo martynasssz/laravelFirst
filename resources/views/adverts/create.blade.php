@@ -37,7 +37,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="locartion">Objekto vieta</label>
+                                    <label for="location">Objekto vieta</label>
                                     <select class="form-control col-md-4" name="city_id">
                                         <option disabled>Pasirinkti miestą</option>
                                             @foreach($cities as $city)

@@ -27,11 +27,13 @@
                                            value="{{$advert->image}}">
                                 </div>
                                 <div class="form-group">
+                                    <label for="price">Kaina</label>
                                     <input class="form-control" type="number" name="price" placeholder="Kaina"
                                            value="{{$advert->price}}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="price">Kaina</label>
+
+                                    <label for="exampleFormControlSelect2">Pasirinkti kategoriją</label>
                                     <select class="form-control col-md-4" name="category_id">
                                         <option disabled> Pasirinkti kategorija</option>
                                         @foreach($categories as $cat)
@@ -42,7 +44,7 @@
                             <div class="form-group">
                                 <label for="location">Objekto vieta</label>
                                 <select class="form-control col-md-4" name="city_id">
-                                                                        <option disabled>Pasirinkti miestą</option>
+                                     <option disabled>Pasirinkti miestą</option>
                                     @foreach($cities as $city)
                                         <option @if(($advert->city_id)==($city->id)) {{'selected'}}@endif value="{{$city->id}}"> {{$city->name}}</option>
                                     @endforeach

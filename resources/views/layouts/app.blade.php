@@ -67,7 +67,7 @@
                     @else
                         @role('user')
                         <li class="nav-item">
-                            <a class="nav-link " href="{{route('messages.index')}}">Messages ({{$messageCount}})</a>
+                            <a class="nav-link " href="{{route('messages.index')}}">Žinutės ({{$messageCount}})</a>
                         </li>
                         @endrole
 

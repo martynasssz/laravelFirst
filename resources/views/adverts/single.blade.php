@@ -14,12 +14,12 @@
                             <span class="font-weight-bold"> Kaina:</span> {{ $advert->price}} €
                         </div>
                     </div>
-                    <div class="text-center font-weight-bold h4 "> Papildoma informacija</div>
+                    <div class="text-center font-weight-bold h5 "> Papildoma informacija</div>
                     <div class="card-body">
                         <table>
                             <tbody>
                             <tr>
-                                <th class=" font-weight-bold border-bottom h6">Objekto vieta:</th>
+                                <th class=" font-weight-bold border-bottom h6">Vieta:</th>
                                 <td class="pl-3 border-bottom h6">{{$advert->city->name}}</td>
                             </tr>
 {{--                            <tr>--}}
@@ -40,11 +40,11 @@
                             <form method="post" action="{{route('advert.destroy', ['id' => $advert->id])}}">
                                 @method('DELETE')
                                 @csrf
-                                <button type="submit" class="btn btn-outline-secondary float-right btn-sm">Delete</button>
+                                <button type="submit" class="btn btn-outline-secondary float-right btn-sm">Trinti</button>
                             </form>
                             <form>
                                 <button class="btn btn-outline-secondary float-right btn-sm"
-                                        formaction="{{route('advert.edit', $advert->id)}}">Edit
+                                        formaction="{{route('advert.edit', $advert->id)}}">Redaguoti
                                 </button>
                             </form>
                         </div>

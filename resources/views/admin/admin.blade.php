@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             @include('admin.sidebar')
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">Skelbimų valdymas</div>
                     <table id="mytable" class="table table-bordred table-striped">
@@ -12,6 +12,7 @@
                         <th>ID</th>
                         <th>Nuotrauka</th>
                         <th>Skebimai</th>
+                        <th>Detaliau</th>
                         <th>Redaguoti</th>
                         <th>Neaktyvus</th>
                         <th>Aktyvus</th>
@@ -22,6 +23,9 @@
                                 <td>{{$advert->id}}</td>
                                  <td><img src="{{ $advert-> image}}" width="50" height="50"></td>
                                 <td>{{$advert->title}}</td>
+                                 <td>
+                                     <a class="btn btn-success btn-sm" href="{{route('advert.show', $advert->slug)}}"> Detaliau </a>
+                                 </td>
                                 <td>
                                     <a class="btn btn-primary btn-sm" href="{{route('advert.edit', $advert->id)}}"> Redaguoti </a>
                                 </td>

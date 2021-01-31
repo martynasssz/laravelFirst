@@ -30,16 +30,17 @@
                                                 <h6>{{$advert->category->title}}</h6>
                                                 <h5 class="card-title">{{$advert->title}}</h5>
                                                 {{-- <p class="card-text"> {{ $advert-> content}}</p>--}}
-                                                <p class="card-text"> </p>
-                                                <div class="text-muted">Kaina: {{ $advert-> price}} €</div>
-                                                <a href="{{route('advert.show', $advert->slug)}}"
-                                                   class="btn btn-outline-secondary float-right btn-sm mb-0">Detaliau</a>
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="text-muted">Kaina: {{ $advert-> price}} €</div>
+                                                    <a href="{{route('advert.show', $advert->slug)}}"
+                                                       class="btn btn-outline-secondary float-right btn-sm mb-0">Detaliau</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             @endforeach
-                            {{$adverts ->  links()}}
+{{--                            {{$adverts ->  links()}}--}}
                         </div>
                     </div>
 

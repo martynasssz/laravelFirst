@@ -23,9 +23,10 @@ class CategoryController extends Controller
 
        // $data['subcategories']=$subcategories;
       $data['categories_create'] = Category::all();
-       // dd($categories);
+        //dd($categories);
         return view('category.index', $data);
     }
+
     public function search(Request $request){
         $search = $request->get('search');
         if($search !='') {
